@@ -1,6 +1,6 @@
 <!DOCTYPE CrossStudio_Project_File>
-<solution Name="template_nrf52_arma_v1" target="8" version="2">
-  <project Name="template_nrf52_arma_v1">
+<solution Name="nrf52_arma_v1_board_test" target="8" version="2">
+  <project Name="nrf52_arma_v1_board_test">
     <configuration
       Name="Common"
       arm_architecture="v7EM"
@@ -150,7 +150,7 @@
         <configuration Name="Release" build_exclude_from_build="Yes" />
       </file>
       <file file_name="C:/works/farmware/nrf52/nRF5_SDK_17.1.0_ddde560/modules/nrfx/drivers/src/nrfx_timer.c">
-        <configuration Name="Release" build_exclude_from_build="Yes" />
+        <configuration Name="Release" build_exclude_from_build="No" />
       </file>
       <file file_name="C:/works/farmware/nrf52/nRF5_SDK_17.1.0_ddde560/modules/nrfx/drivers/src/nrfx_twi.c">
         <configuration Name="Release" build_exclude_from_build="Yes" />

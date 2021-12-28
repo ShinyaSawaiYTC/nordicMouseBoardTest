@@ -11,6 +11,7 @@
 #include "nrf_log.h"
 #include "nrf_log_ctrl.h"
 #include "nrf_log_default_backends.h"
+#include "nrf_drv_timer.h"
 
 void button_handler(nrf_drv_gpiote_pin_t pin, nrf_gpiote_polarity_t action){
     switch (pin){
@@ -34,13 +35,9 @@ void enc_handler(nrf_drv_gpiote_pin_t pin, nrf_gpiote_polarity_t action){
     NRF_LOG_DEBUG("A B = %d %d",a,b);
 }
 static void gpio_init(void){
-    ret_code_t err_code;
+    APP_ERROR_CHECK(nrf_drv_gpiote_init());
 
-    err_code = nrf_drv_gpiote_init();
-    APP_ERROR_CHECK(err_code);
-
-    nrf_drv_gpiote_out_config_t out_config = NRFX_GPIOTE_CONFIG_OUT_SIMPLE(false);//GPIOTE_CONFIG_OUT_SIMPLE
-
+    nrf_drv_gpiote_out_config_t out_config = GPIOTE_CONFIG_OUT_SIMPLE(false);
     APP_ERROR_CHECK(nrf_drv_gpiote_out_init(LED_R, &out_config));
     APP_ERROR_CHECK(nrf_drv_gpiote_out_init(LED_G, &out_config));
     APP_ERROR_CHECK(nrf_drv_gpiote_out_init(LED_B, &out_config));
@@ -77,12 +74,41 @@ void log_init(){
     NRF_LOG_DEBUG("end init");
 }
 
+const nrf_drv_timer_t TIMER0 = NRF_DRV_TIMER_INSTANCE(0);
+
+void timer_event_handler(nrf_timer_event_t event_type, void* p_context){
+    static int cnt_btn1 = 0;
+    switch (event_type){
+        case NRF_TIMER_EVENT_COMPARE0:
+            if(cnt_btn1 <500){
+                cnt_btn1++;
+            }else{
+                cnt_btn1 = 0;
+                nrf_drv_gpiote_out_toggle(LED_R);
+            }
+            break;
+    }
+}
+void timer_init(){
+    uint32_t time_ms = 1; //Time(in miliseconds) between consecutive compare events.
+    uint32_t time_ticks;
+    nrf_drv_timer_config_t timer_cfg = NRF_DRV_TIMER_DEFAULT_CONFIG;
+    timer_cfg.frequency = NRF_TIMER_FREQ_250kHz;
+    timer_cfg.bit_width = NRF_TIMER_BIT_WIDTH_8;
+    APP_ERROR_CHECK(nrf_drv_timer_init(&TIMER0, &timer_cfg, timer_event_handler));
+    //ticks = 時間[s] * (timer_cfg.frequency)はtimer_cfg.bit_width以下になる必要がある(ERROR_CHECKに引っかからない)
+    time_ticks = nrf_drv_timer_ms_to_ticks(&TIMER0, time_ms);
+    nrf_drv_timer_extended_compare(&TIMER0, NRF_TIMER_CC_CHANNEL0, time_ticks, NRF_TIMER_SHORT_COMPARE0_CLEAR_MASK, true);
+    nrf_drv_timer_enable(&TIMER0);
+}
+
 int main(void){
-    ret_code_t err_code;
     gpio_init();
-    nrf_drv_gpiote_out_clear(LED_POWER_OFF);
     log_init();
+    timer_init();
+    nrf_drv_gpiote_out_clear(LED_POWER_OFF);
     while (true)
     {
+        __WFI();//低電力モード(割り込みで解除)
     }
 }

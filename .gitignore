@@ -1,3 +1,4 @@
 **/ses/Output/*
 *.jlink
 /.vscode
+**/*.emsession
