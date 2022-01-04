@@ -186,6 +186,8 @@
     <folder Name="Application">
       <file file_name="../../../main.c" />
       <file file_name="../config/sdk_config.h" />
+      <file file_name="../../../btn_enc.c" />
+      <file file_name="../../../btn_enc.h" />
     </folder>
     <folder Name="Board Support">
       <file file_name="C:/works/farmware/nrf52/nRF5_SDK_17.1.0_ddde560/components/libraries/bsp/bsp.c" />
