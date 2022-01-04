@@ -69,10 +69,10 @@ extern "C" {
 // #define SER_APP_CTS_PIN             NRF_GPIO_PIN_MAP(0,2)     // UART Clear To Send pin number.
 // #define SER_APP_RTS_PIN             NRF_GPIO_PIN_MAP(1,15)    // UART Request To Send pin number.
 
-#define SER_CON_SPIS_SCK_PIN        NRF_GPIO_PIN_MAP(0,07)    // SPI SCK signal.
-#define SER_CON_SPIS_MOSI_PIN       NRF_GPIO_PIN_MAP(0,05)    // SPI MOSI signal.
-#define SER_CON_SPIS_MISO_PIN       NRF_GPIO_PIN_MAP(0,06)    // SPI MISO signal.
-#define SER_CON_SPIS_CSN_PIN        NRF_GPIO_PIN_MAP(0,26)    // SPI CSN signal.
+// #define SER_CON_SPIS_SCK_PIN        NRF_GPIO_PIN_MAP(0,07)    // SPI SCK signal.
+// #define SER_CON_SPIS_MOSI_PIN       NRF_GPIO_PIN_MAP(0,05)    // SPI MOSI signal.
+// #define SER_CON_SPIS_MISO_PIN       NRF_GPIO_PIN_MAP(0,06)    // SPI MISO signal.
+// #define SER_CON_SPIS_CSN_PIN        NRF_GPIO_PIN_MAP(0,26)    // SPI CSN signal.
 // #define SER_CON_SPIS_RDY_PIN        NRF_GPIO_PIN_MAP(1,15)    // SPI READY GPIO pin number.
 // #define SER_CON_SPIS_REQ_PIN        NRF_GPIO_PIN_MAP(1,14)    // SPI REQUEST GPIO pin number.
 

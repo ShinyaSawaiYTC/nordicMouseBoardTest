@@ -12,6 +12,7 @@
 #include "nrf_log_default_backends.h"
 
 #include "btn_enc.h"
+#include "sens.h"
 
 void log_init(){
     APP_ERROR_CHECK(NRF_LOG_INIT(NULL));
@@ -20,12 +21,14 @@ void log_init(){
 }
 
 int main(void){
-    gpio_init();
     log_init();
+    sens_init();//割り込みが起きないようにする
+    gpio_init();
     timer_init();
     nrf_gpio_pin_write(LED_POWER_OFF,false);
     while (true)
     {
-        __WFI();//低電力モード(割り込みで解除)
+        sens_in_loop();
+        // __WFI();//低電力モード(割り込みで解除)
     }
 }
