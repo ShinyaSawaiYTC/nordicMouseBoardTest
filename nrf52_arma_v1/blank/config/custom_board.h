@@ -26,7 +26,7 @@ extern "C" {
 #define BSP_LED_1      LED_G
 #define BSP_LED_2      LED_B
 
-#define BUTTONS_NUMBER 4
+#define BUTTONS_NUMBER 6
 
 #define BUTTON_R       NRF_GPIO_PIN_MAP(0,0)   //0.00
 #define BUTTON_L       NRF_GPIO_PIN_MAP(0,1)   //0.01
@@ -40,13 +40,14 @@ extern "C" {
 
 #define BUTTONS_ACTIVE_STATE 0
 
-#define BUTTONS_LIST { BUTTON_R, BUTTON_L, BUTTON_M, BUTTON_FOW, BUTTON_PREV}
+#define BUTTONS_LIST { BUTTON_R, BUTTON_L, BUTTON_M, BUTTON_FOW, BUTTON_PREV, BUTTON_AIM }
 
 #define BSP_BUTTON_0   BUTTON_R
 #define BSP_BUTTON_1   BUTTON_L
 #define BSP_BUTTON_2   BUTTON_M
 #define BSP_BUTTON_3   BUTTON_FOW
-#define BSP_BUTTON_3   BUTTON_PREV
+#define BSP_BUTTON_4   BUTTON_PREV
+#define BSP_BUTTON_5   BUTTON_AIM
 
 // #define RX_PIN_NUMBER  8
 // #define TX_PIN_NUMBER  6
