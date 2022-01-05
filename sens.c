@@ -4,7 +4,6 @@
 #include "nrf_gpio.h"
 #include "nrf_log.h"
 
-#include "boards.h"
 /*****************************************************************************************************************
  * センサ : PAW3311DB
  * SPIクロック : 4MHz(最大8MHz)クロックによってMOSI-MISO間の抵抗値調整
@@ -261,6 +260,8 @@ void sens_init(){
     sens_read(0x04);
     sens_read(0x05);
     sens_read(0x06);
+    sens_write(0x4e,0x8f);//Resolution-12000cpi
+    sens_write(0x5A,0x90);//Ripple_control-enable
 }
 
 void sens_in_loop(){
@@ -272,4 +273,30 @@ void sens_in_loop(){
     sens_write(0x02,0x20);
     NRF_LOG_DEBUG("MOT = 0x%02x",test);
     nrf_delay_ms(500);
+}
+volatile uint8_t sens_burst_result[SENS_BURST_READ_BYTES];
+volatile bool sens_burst_end_flag;
+// typedef enum{
+    
+// }sens_burst_read_sequence_t;
+// sens_burst_read_sequence_t sen_burst_state;
+// void sens_burst_read_sequence(){
+
+// }
+void sens_burst_read_start(){
+    volatile uint8_t rep;
+    sens_burst_end_flag = false;
+    nrf_gpio_pin_clear(SPI_CSN_PIN);
+    nrf_delay_us(1);
+    sens_send(0x16);
+    nrf_delay_us(2);//TSRAD
+    rep = NRF_SPI0->RXD;//ダミー
+    for(uint8_t i = 0; i < 6; i++){
+        sens_send(0xff);
+        sens_burst_result[i] = NRF_SPI0->RXD;//[0]
+    }
+    nrf_delay_us(2);//TSRR,TSRW
+    nrf_gpio_pin_set(SPI_CSN_PIN);
+    sens_write(0x02,0x00);//Motionレジスタをクリア
+    sens_burst_end_flag = true;
 }
