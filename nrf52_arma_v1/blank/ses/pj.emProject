@@ -190,6 +190,8 @@
       <file file_name="../../../btn_enc.h" />
       <file file_name="../../../sens.c" />
       <file file_name="../../../sens.h" />
+      <file file_name="../../../gen_timer.c" />
+      <file file_name="../../../gen_timer.h" />
     </folder>
     <folder Name="Board Support">
       <file file_name="C:/works/farmware/nrf52/nRF5_SDK_17.1.0_ddde560/components/libraries/bsp/bsp.c" />
