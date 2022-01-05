@@ -22,7 +22,7 @@ void log_init(){
 
 int main(void){
     log_init();
-    sens_init();//割り込みが起きないようにする
+    sens_init();
     gpio_init();
     timer_init();
     nrf_gpio_pin_write(LED_POWER_OFF,false);

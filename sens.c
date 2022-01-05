@@ -35,6 +35,14 @@ uint8_t spi_tx_buf[SPI_BUFFER_LEN];
 uint8_t spi_rx_buf[SPI_BUFFER_LEN];
 uint8_t spi_cursor;
 volatile bool spi_int_flag;
+typedef enum{
+    SENS_55_RES_PROCESSING,
+    SENS_55_RES_OK,
+    SENS_55_RES_TIMED_OUT,
+}sens_init_setting_55_result_t;
+volatile sens_init_setting_55_result_t sens_init_setting_55_result;
+
+void (*sens_timer_int_function_ptr)();
 
 void spi_init(){
     NRF_SPI0->INTENSET = (
@@ -64,6 +72,34 @@ void SPI0_TWI0_IRQHandler(){
         spi_int_flag = true;
     }
 }
+void sens_timer_init(){
+    NRF_TIMER3->INTENSET = TIMER_INTENSET_COMPARE0_Enabled << TIMER_INTENSET_COMPARE0_Pos;
+    NRF_TIMER3->SHORTS =  TIMER_SHORTS_COMPARE0_CLEAR_Enabled << TIMER_SHORTS_COMPARE0_CLEAR_Pos;
+    NRF_TIMER3->MODE = TIMER_MODE_MODE_Timer << TIMER_MODE_MODE_Pos;
+    NRF_TIMER3->BITMODE = TIMER_BITMODE_BITMODE_16Bit << TIMER_BITMODE_BITMODE_Pos;
+    NRF_TIMER3->PRESCALER = 4 << TIMER_PRESCALER_PRESCALER_Pos;//timer step = 2^PRESCALER/16MHz
+    NRF_TIMER3->TASKS_CLEAR = 1;
+    NVIC_SetPriority(TIMER3_IRQn,SPI_DEFAULT_CONFIG_IRQ_PRIORITY + 1);//timer割込中にSPI割込を許可する。
+}
+void sens_timer_set(uint16_t timer){
+    NRF_TIMER3->CC[0] = timer;
+}
+void sens_timer_start(){
+    NRF_TIMER3->TASKS_CLEAR = 1;
+    NVIC_ClearPendingIRQ(TIMER3_IRQn); //割り込み要求クリア
+    NVIC_EnableIRQ(TIMER3_IRQn);       //割り込み有効化
+    NRF_TIMER3->TASKS_START = 1;
+}
+void sens_timer_stop(){
+    NVIC_DisableIRQ(TIMER3_IRQn);       //割り込み無効化
+    NRF_TIMER3->TASKS_STOP = 1;
+}
+void TIMER3_IRQHandler(){
+    if(NRF_TIMER3->EVENTS_COMPARE[0] && NRF_TIMER3->INTENSET & TIMER_INTENSET_COMPARE0_Msk){
+        NRF_TIMER3->EVENTS_COMPARE[0] = 0;
+        (*sens_timer_int_function_ptr)();
+    }
+}
 void sens_send(uint8_t data){
     spi_int_flag = false;
     NRF_SPI0->TXD = data;
@@ -89,7 +125,30 @@ void sens_write(uint8_t reg,uint8_t value){
 uint8_t sens_read(uint8_t reg){
     return sens_wr(reg,0xff,2);
 }
-void sens_init_setting(){
+void sens_init_setting_55(){//初期手順のひとつ。タイマーで1ms毎に呼ばれる
+    static uint8_t i = 0;
+    uint8_t res;
+    if(i == 0){//最初に呼ばれた場合初期化
+        sens_init_setting_55_result = SENS_55_RES_PROCESSING;
+        sens_timer_int_function_ptr = sens_init_setting_55;//割り込み関数に自身を登録
+        sens_timer_set(1000);//1000us
+        sens_timer_start();
+    }
+    res = sens_read(0x20);//55ms間1ms+-1%で読む
+    if(res == 0x0F){
+        sens_init_setting_55_result = SENS_55_RES_OK;
+    }else if(i >= 55){
+        sens_init_setting_55_result = SENS_55_RES_TIMED_OUT;
+    }else{
+        i++;
+    }
+    if(sens_init_setting_55_result != SENS_55_RES_PROCESSING){//終了した場合
+        i = 0;
+        sens_timer_stop();
+        sens_timer_int_function_ptr = NULL;//割り込み関数を開放
+    }
+}
+void sens_init_setting(){//初期化手順。データシート参考のこと
     uint8_t r1,r2;
     sens_write(0x40,0x80);
     sens_write(0x55,0x01);
@@ -173,12 +232,12 @@ void sens_init_setting(){
     sens_write(0x61,0xAD);
     sens_write(0x51,0xEA);
     sens_write(0x19,0x9F);
-    for(uint8_t i = 0; i < 55; i++){//55ms間1ms+-1%で読む
-        r1 = sens_read(0x20);
-        if(r1 == 0x0F){
-            break;
-        }
-        nrf_delay_us(994);
+    sens_init_setting_55();//sens_read(0x20)を55ms間1ms+-1%で実行
+    while(sens_init_setting_55_result == SENS_55_RES_PROCESSING);//終了まで待つ
+    if(sens_init_setting_55_result == SENS_55_RES_TIMED_OUT){
+        NRF_LOG_DEBUG("Sens init failed (timed out)");
+    }else{
+        NRF_LOG_DEBUG("Sens init success");
     }
     sens_write(0x19,0x10);
     sens_write(0x40,0x00);
@@ -186,6 +245,8 @@ void sens_init_setting(){
     sens_write(0x7F,0x00);
 }
 void sens_init(){
+    /** タイマ設定 ***/
+    sens_timer_init();
     /** SPI設定 ***/
     nrf_gpio_cfg_output(SPI_CSN_PIN);
     nrf_gpio_pin_set(SPI_CSN_PIN);
