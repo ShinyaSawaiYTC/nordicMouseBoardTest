@@ -108,11 +108,6 @@ void gpio_init(void){
     // GPIOTEはそれぞれ8つまでのTasks/Eventsが設定できる。
     APP_ERROR_CHECK(nrf_drv_gpiote_init());
 
-    nrf_drv_gpiote_out_config_t out_config = GPIOTE_CONFIG_OUT_SIMPLE(false);
-    APP_ERROR_CHECK(nrf_drv_gpiote_out_init(LED_R, &out_config));
-    APP_ERROR_CHECK(nrf_drv_gpiote_out_init(LED_G, &out_config));
-    APP_ERROR_CHECK(nrf_drv_gpiote_out_init(LED_B, &out_config));
-
     nrf_drv_gpiote_in_config_t button_config = GPIOTE_CONFIG_IN_SENSE_TOGGLE(true);
     nrf_drv_gpiote_in_config_t enc_config = GPIOTE_CONFIG_IN_SENSE_TOGGLE(true);
     nrf_drv_gpiote_in_config_t sns_config = GPIOTE_CONFIG_IN_SENSE_LOTOHI(true);
@@ -127,7 +122,7 @@ void gpio_init(void){
     APP_ERROR_CHECK(nrf_drv_gpiote_in_init(BUTTON_FOW, &button_config, sw_handler));
     APP_ERROR_CHECK(nrf_drv_gpiote_in_init(BUTTON_PREV, &button_config, sw_handler));
     APP_ERROR_CHECK(nrf_drv_gpiote_in_init(ENCODER_A, &enc_config, sw_handler));
-    APP_ERROR_CHECK(nrf_drv_gpiote_in_init(SNS_MOTION, &enc_config, sens_motion_handler));
+    APP_ERROR_CHECK(nrf_drv_gpiote_in_init(SNS_MOTION, &sns_config, sens_motion_handler));
     nrf_drv_gpiote_in_event_enable(BUTTON_L, true);
     nrf_drv_gpiote_in_event_enable(BUTTON_R, true);
     nrf_drv_gpiote_in_event_enable(BUTTON_M, true);
@@ -138,7 +133,7 @@ void gpio_init(void){
     nrf_drv_gpiote_in_event_enable(SNS_MOTION, true);
     
     // 通常出力
-    nrf_gpio_cfg_output(LED_POWER_OFF);
+    
     // 通常入力
     nrf_gpio_cfg_input(BUTTON_DPI, NRF_GPIO_PIN_PULLUP);
     nrf_gpio_cfg_input(BUTTON_LED, NRF_GPIO_PIN_PULLUP);

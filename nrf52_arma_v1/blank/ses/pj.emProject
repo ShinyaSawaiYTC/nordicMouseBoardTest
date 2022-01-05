@@ -190,6 +190,8 @@
       <file file_name="../../../btn_enc.h" />
       <file file_name="../../../sens.c" />
       <file file_name="../../../sens.h" />
+      <file file_name="../../../led.c" />
+      <file file_name="../../../led.h" />
       <file file_name="../../../gen_timer.c" />
       <file file_name="../../../gen_timer.h" />
     </folder>
