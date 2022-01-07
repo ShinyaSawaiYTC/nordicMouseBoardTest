@@ -7,12 +7,14 @@
 
 #include "nrf_log.h"
 
+#include "usb.h"
+
 typedef enum {
-    SW_BUTTON_R = 0,
-    SW_BUTTON_L,
-    SW_BUTTON_M,
-    SW_BUTTON_FOW,
-    SW_BUTTON_PREV,
+    SW_BUTTON_L = 0,    //USBのButtonIDも兼ねる
+    SW_BUTTON_R = 1,    //USBのButtonIDも兼ねる
+    SW_BUTTON_M = 2,    //USBのButtonIDも兼ねる
+    SW_BUTTON_PREV = 3, //USBのButtonIDも兼ねる
+    SW_BUTTON_FOW = 4,  //USBのButtonIDも兼ねる
     SW_BUTTON_AIM,
     SW_ENCODER_A,
     SW_NUMBER,
@@ -156,26 +158,56 @@ void timer_event_handler(nrf_timer_event_t event_type, void* p_context){
             enc = is_sw_wait_enc_changed(SW_ENCODER_A,TimeChattEnc);
             if(enc != ENC_NO_CHANGE){
                 NRF_LOG_DEBUG("enc = %s",enc == ENC_CW?"CW":"CCW");
+                if(enc == ENC_CW){
+                    app_usbd_hid_mouse_scroll_move(usb_mouse_handler,-1);
+                }else{
+                    app_usbd_hid_mouse_scroll_move(usb_mouse_handler,1);
+                }
             }
             btn = is_sw_wait_btn_changed(SW_BUTTON_L,TimeChattButton);
             if(btn != BTN_NO_CHANGE){
                 NRF_LOG_DEBUG("BUTTON_L = %s",btn == BTN_PUSH?"PUSHED":"RELEASED");
+                if(btn == BTN_PUSH){
+                    app_usbd_hid_mouse_button_state(usb_mouse_handler,SW_BUTTON_L,true);
+                }else{
+                    app_usbd_hid_mouse_button_state(usb_mouse_handler,SW_BUTTON_L,false);
+                }
             }
             btn = is_sw_wait_btn_changed(SW_BUTTON_R,TimeChattButton);
             if(btn != BTN_NO_CHANGE){
                 NRF_LOG_DEBUG("BUTTON_R = %s",btn == BTN_PUSH?"PUSHED":"RELEASED");
+                if(btn == BTN_PUSH){
+                    app_usbd_hid_mouse_button_state(usb_mouse_handler,SW_BUTTON_R,true);
+                }else{
+                    app_usbd_hid_mouse_button_state(usb_mouse_handler,SW_BUTTON_R,false);
+                }
             }
             btn = is_sw_wait_btn_changed(SW_BUTTON_M,TimeChattButton);
             if(btn != BTN_NO_CHANGE){
                 NRF_LOG_DEBUG("BUTTON_M = %s",btn == BTN_PUSH?"PUSHED":"RELEASED");
+                if(btn == BTN_PUSH){
+                    app_usbd_hid_mouse_button_state(usb_mouse_handler,SW_BUTTON_M,true);
+                }else{
+                    app_usbd_hid_mouse_button_state(usb_mouse_handler,SW_BUTTON_M,false);
+                }
             }
             btn = is_sw_wait_btn_changed(SW_BUTTON_FOW,TimeChattButton);
             if(btn != BTN_NO_CHANGE){
                 NRF_LOG_DEBUG("BUTTON_FOW = %s",btn == BTN_PUSH?"PUSHED":"RELEASED");
+                if(btn == BTN_PUSH){
+                    app_usbd_hid_mouse_button_state(usb_mouse_handler,SW_BUTTON_FOW,true);
+                }else{
+                    app_usbd_hid_mouse_button_state(usb_mouse_handler,SW_BUTTON_FOW,false);
+                }
             }
             btn = is_sw_wait_btn_changed(SW_BUTTON_PREV,TimeChattButton);
             if(btn != BTN_NO_CHANGE){
                 NRF_LOG_DEBUG("BUTTON_PREV = %s",btn == BTN_PUSH?"PUSHED":"RELEASED");
+                if(btn == BTN_PUSH){
+                    app_usbd_hid_mouse_button_state(usb_mouse_handler,SW_BUTTON_PREV,true);
+                }else{
+                    app_usbd_hid_mouse_button_state(usb_mouse_handler,SW_BUTTON_PREV,false);
+                }
             }
             btn = is_sw_wait_btn_changed(SW_BUTTON_AIM,TimeChattButton);
             if(btn != BTN_NO_CHANGE){

@@ -272,7 +272,7 @@ void sens_in_loop(){
     test = sens_read(0x02);
     sens_write(0x02,0x20);
     NRF_LOG_DEBUG("MOT = 0x%02x",test);
-    nrf_delay_ms(500);
+    // nrf_delay_ms(500);
 }
 volatile uint8_t sens_burst_result[SENS_BURST_READ_BYTES];
 volatile bool sens_burst_end_flag;

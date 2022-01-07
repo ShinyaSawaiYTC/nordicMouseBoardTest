@@ -51,10 +51,10 @@
     </folder>
     <folder Name="nRF_Drivers">
       <file file_name="C:/works/farmware/nrf52/nRF5_SDK_17.1.0_ddde560/integration/nrfx/legacy/nrf_drv_clock.c">
-        <configuration Name="Release" build_exclude_from_build="Yes" />
+        <configuration Name="Release" build_exclude_from_build="No" />
       </file>
       <file file_name="C:/works/farmware/nrf52/nRF5_SDK_17.1.0_ddde560/integration/nrfx/legacy/nrf_drv_power.c">
-        <configuration Name="Release" build_exclude_from_build="Yes" />
+        <configuration Name="Release" build_exclude_from_build="No" />
       </file>
       <file file_name="C:/works/farmware/nrf52/nRF5_SDK_17.1.0_ddde560/integration/nrfx/legacy/nrf_drv_ppi.c">
         <configuration Name="Release" build_exclude_from_build="Yes" />
@@ -90,7 +90,7 @@
         <configuration Name="Release" build_exclude_from_build="No" />
       </file>
       <file file_name="C:/works/farmware/nrf52/nRF5_SDK_17.1.0_ddde560/modules/nrfx/drivers/src/nrfx_clock.c">
-        <configuration Name="Release" build_exclude_from_build="Yes" />
+        <configuration Name="Release" build_exclude_from_build="No" />
       </file>
       <file file_name="C:/works/farmware/nrf52/nRF5_SDK_17.1.0_ddde560/modules/nrfx/drivers/src/nrfx_comp.c">
         <configuration Name="Release" build_exclude_from_build="Yes" />
@@ -108,7 +108,7 @@
         <configuration Name="Release" build_exclude_from_build="Yes" />
       </file>
       <file file_name="C:/works/farmware/nrf52/nRF5_SDK_17.1.0_ddde560/modules/nrfx/drivers/src/nrfx_power.c">
-        <configuration Name="Release" build_exclude_from_build="Yes" />
+        <configuration Name="Release" build_exclude_from_build="No" />
       </file>
       <file file_name="C:/works/farmware/nrf52/nRF5_SDK_17.1.0_ddde560/modules/nrfx/drivers/src/nrfx_ppi.c">
         <configuration Name="Release" build_exclude_from_build="Yes" />
@@ -168,7 +168,7 @@
         <configuration Name="Release" build_exclude_from_build="Yes" />
       </file>
       <file file_name="C:/works/farmware/nrf52/nRF5_SDK_17.1.0_ddde560/modules/nrfx/drivers/src/nrfx_usbd.c">
-        <configuration Name="Release" build_exclude_from_build="Yes" />
+        <configuration Name="Release" build_exclude_from_build="No" />
       </file>
       <file file_name="C:/works/farmware/nrf52/nRF5_SDK_17.1.0_ddde560/modules/nrfx/drivers/src/nrfx_wdt.c">
         <configuration Name="Release" build_exclude_from_build="Yes" />
@@ -194,6 +194,8 @@
       <file file_name="../../../led.h" />
       <file file_name="../../../gen_timer.c" />
       <file file_name="../../../gen_timer.h" />
+      <file file_name="../../../usb.c" />
+      <file file_name="../../../usb.h" />
     </folder>
     <folder Name="Board Support">
       <file file_name="C:/works/farmware/nrf52/nRF5_SDK_17.1.0_ddde560/components/libraries/bsp/bsp.c" />
@@ -365,7 +367,7 @@
         <configuration Name="Release" build_exclude_from_build="Yes" />
       </file>
       <file file_name="C:/works/farmware/nrf52/nRF5_SDK_17.1.0_ddde560/components/libraries/usbd/app_usbd.c">
-        <configuration Name="Release" build_exclude_from_build="Yes" />
+        <configuration Name="Release" build_exclude_from_build="No" />
       </file>
       <file file_name="C:/works/farmware/nrf52/nRF5_SDK_17.1.0_ddde560/components/libraries/usbd/class/audio/app_usbd_audio.c">
         <configuration Name="Release" build_exclude_from_build="Yes" />
@@ -374,10 +376,10 @@
         <configuration Name="Release" build_exclude_from_build="Yes" />
       </file>
       <file file_name="C:/works/farmware/nrf52/nRF5_SDK_17.1.0_ddde560/components/libraries/usbd/app_usbd_core.c">
-        <configuration Name="Release" build_exclude_from_build="Yes" />
+        <configuration Name="Release" build_exclude_from_build="No" />
       </file>
       <file file_name="C:/works/farmware/nrf52/nRF5_SDK_17.1.0_ddde560/components/libraries/usbd/class/hid/app_usbd_hid.c">
-        <configuration Name="Release" build_exclude_from_build="Yes" />
+        <configuration Name="Release" build_exclude_from_build="No" />
       </file>
       <file file_name="C:/works/farmware/nrf52/nRF5_SDK_17.1.0_ddde560/components/libraries/usbd/class/hid/generic/app_usbd_hid_generic.c">
         <configuration Name="Release" build_exclude_from_build="Yes" />
@@ -386,13 +388,13 @@
         <configuration Name="Release" build_exclude_from_build="Yes" />
       </file>
       <file file_name="C:/works/farmware/nrf52/nRF5_SDK_17.1.0_ddde560/components/libraries/usbd/class/hid/mouse/app_usbd_hid_mouse.c">
-        <configuration Name="Release" build_exclude_from_build="Yes" />
+        <configuration Name="Release" build_exclude_from_build="No" />
       </file>
       <file file_name="C:/works/farmware/nrf52/nRF5_SDK_17.1.0_ddde560/components/libraries/usbd/class/msc/app_usbd_msc.c">
         <configuration Name="Release" build_exclude_from_build="Yes" />
       </file>
       <file file_name="C:/works/farmware/nrf52/nRF5_SDK_17.1.0_ddde560/components/libraries/usbd/app_usbd_string_desc.c">
-        <configuration Name="Release" build_exclude_from_build="Yes" />
+        <configuration Name="Release" build_exclude_from_build="No" />
       </file>
       <file file_name="C:/works/farmware/nrf52/nRF5_SDK_17.1.0_ddde560/components/libraries/util/app_util_platform.c">
         <configuration Name="Release" build_exclude_from_build="No" />
@@ -458,7 +460,7 @@
         <configuration Name="Release" build_exclude_from_build="No" />
       </file>
       <file file_name="C:/works/farmware/nrf52/nRF5_SDK_17.1.0_ddde560/components/libraries/atomic_fifo/nrf_atfifo.c">
-        <configuration Name="Release" build_exclude_from_build="Yes" />
+        <configuration Name="Release" build_exclude_from_build="No" />
       </file>
       <file file_name="C:/works/farmware/nrf52/nRF5_SDK_17.1.0_ddde560/components/libraries/atomic/nrf_atomic.c">
         <configuration Name="Release" build_exclude_from_build="No" />

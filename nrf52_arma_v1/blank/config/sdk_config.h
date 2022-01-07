@@ -5909,7 +5909,7 @@
  
 
 #ifndef APP_USBD_STRINGS_MANUFACTURER_EXTERN
-#define APP_USBD_STRINGS_MANUFACTURER_EXTERN 0
+#define APP_USBD_STRINGS_MANUFACTURER_EXTERN 1
 #endif
 
 // <s> APP_USBD_STRINGS_MANUFACTURER - String descriptor for the manufacturer name.
@@ -5922,6 +5922,7 @@
 // <i> Alternatively, configure the macro to point to any internal variable pointer that already contains the descriptor.
 // <i> Setting string to NULL disables that string.
 // <i> The order of manufacturer names must be the same like in @ref APP_USBD_STRINGS_LANGIDS.
+#define APP_USBD_STRINGS_MANUFACTURER g_my_usbd_manufacturer
 #ifndef APP_USBD_STRINGS_MANUFACTURER
 #define APP_USBD_STRINGS_MANUFACTURER APP_USBD_STRING_DESC("Nordic Semiconductor")
 #endif
@@ -5939,13 +5940,14 @@
  
 
 #ifndef APP_USBD_STRINGS_PRODUCT_EXTERN
-#define APP_USBD_STRINGS_PRODUCT_EXTERN 0
+#define APP_USBD_STRINGS_PRODUCT_EXTERN 1
 #endif
 
 // <s> APP_USBD_STRINGS_PRODUCT - String descriptor for the product name.
 
 // <i> Note: This value is not editable in Configuration Wizard.
 // <i> List of product names that is defined the same way like in @ref APP_USBD_STRINGS_MANUFACTURER.
+#define APP_USBD_STRINGS_PRODUCT g_my_usbd_product
 #ifndef APP_USBD_STRINGS_PRODUCT
 #define APP_USBD_STRINGS_PRODUCT APP_USBD_STRING_DESC("nRF52 USB Product")
 #endif
@@ -5963,13 +5965,14 @@
  
 
 #ifndef APP_USBD_STRING_SERIAL_EXTERN
-#define APP_USBD_STRING_SERIAL_EXTERN 0
+#define APP_USBD_STRING_SERIAL_EXTERN 1
 #endif
 
 // <s> APP_USBD_STRING_SERIAL - String descriptor for the serial number.
 
 // <i> Note: This value is not editable in Configuration Wizard.
 // <i> Serial number that is defined the same way like in @ref APP_USBD_STRINGS_MANUFACTURER.
+#define APP_USBD_STRING_SERIAL g_my_usbd_serial
 #ifndef APP_USBD_STRING_SERIAL
 #define APP_USBD_STRING_SERIAL APP_USBD_STRING_DESC("000000000000")
 #endif
@@ -5987,13 +5990,14 @@
  
 
 #ifndef APP_USBD_STRING_CONFIGURATION_EXTERN
-#define APP_USBD_STRING_CONFIGURATION_EXTERN 0
+#define APP_USBD_STRING_CONFIGURATION_EXTERN 1
 #endif
 
 // <s> APP_USBD_STRINGS_CONFIGURATION - String descriptor for the device configuration.
 
 // <i> Note: This value is not editable in Configuration Wizard.
 // <i> Configuration string that is defined the same way like in @ref APP_USBD_STRINGS_MANUFACTURER.
+#define APP_USBD_STRINGS_CONFIGURATION g_my_usbd_configration
 #ifndef APP_USBD_STRINGS_CONFIGURATION
 #define APP_USBD_STRINGS_CONFIGURATION APP_USBD_STRING_DESC("Default configuration")
 #endif
