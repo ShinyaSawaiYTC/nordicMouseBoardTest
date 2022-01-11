@@ -260,8 +260,11 @@ void sens_init(){
     sens_read(0x04);
     sens_read(0x05);
     sens_read(0x06);
-    sens_write(0x4e,0x8f);//Resolution-12000cpi
+    sens_cpi_set(CPI_1600);
     sens_write(0x5A,0x90);//Ripple_control-enable
+}
+void sens_cpi_set(cpi_table_t cpi){
+    sens_write(0x4E,cpi);
 }
 
 void sens_in_loop(){
@@ -283,7 +286,7 @@ volatile bool sens_burst_end_flag;
 // void sens_burst_read_sequence(){
 
 // }
-void sens_burst_read_start(){
+void sens_burst_read_start(){//非同期
     volatile uint8_t rep;
     sens_burst_end_flag = false;
     nrf_gpio_pin_clear(SPI_CSN_PIN);
@@ -293,10 +296,15 @@ void sens_burst_read_start(){
     rep = NRF_SPI0->RXD;//ダミー
     for(uint8_t i = 0; i < 6; i++){
         sens_send(0xff);
-        sens_burst_result[i] = NRF_SPI0->RXD;//[0]
+        //[0]MOTION(読み終わった時点でMOTビットがクリアされる)
+        //[1]Chip_Observation
+        //[2]Delta_X_L
+        //[3]Delta_X_H
+        //[4]Delta_Y_L
+        //[5]Delta_X_H
+        sens_burst_result[i] = NRF_SPI0->RXD;
     }
     nrf_delay_us(2);//TSRR,TSRW
     nrf_gpio_pin_set(SPI_CSN_PIN);
-    sens_write(0x02,0x00);//Motionレジスタをクリア
     sens_burst_end_flag = true;
 }

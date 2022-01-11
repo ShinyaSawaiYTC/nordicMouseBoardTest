@@ -29,7 +29,9 @@ void gen_timer_int_from_loop(){
     if(!nrf_gpio_pin_read(SNS_MOTION)){
         sens_burst_read_start();
     }
-    ms_cunt++;
+    if(ms_cunt<0x7fff){
+        ms_cunt++;
+    }
 }
 int main(void){
     log_init();
@@ -55,7 +57,15 @@ int main(void){
         }
         if(ms_cunt >= 1000){
             ms_cunt = 0;
-            sens_in_loop();
+            if(!nrf_gpio_pin_read(BUTTON_DPI)){
+                NRF_LOG_DEBUG("CPI = 12000");
+                sens_cpi_set(CPI_12000);
+            }
+            if(!nrf_gpio_pin_read(BUTTON_LED)){
+                NRF_LOG_DEBUG("CPI = 1600");
+                sens_cpi_set(CPI_1600);
+            }
+            // sens_in_loop();
         }
         NRF_LOG_INTERNAL_PROCESS();
         // __WFI();//低電力モード(割り込みで解除)
