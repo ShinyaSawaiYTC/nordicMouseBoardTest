@@ -36,6 +36,7 @@ void gen_timer_int_from_loop(){
 int main(void){
     log_init();
     sens_init();
+    sens_cpi_set(CPI_800);
     gpio_init();
     timer_init();
     led_init();
@@ -58,12 +59,12 @@ int main(void){
         if(ms_cunt >= 1000){
             ms_cunt = 0;
             if(!nrf_gpio_pin_read(BUTTON_DPI)){
-                NRF_LOG_DEBUG("CPI = 12000");
-                sens_cpi_set(CPI_12000);
+                NRF_LOG_DEBUG("CPI = 800");
+                sens_cpi_set(CPI_800);
             }
             if(!nrf_gpio_pin_read(BUTTON_LED)){
-                NRF_LOG_DEBUG("CPI = 1600");
-                sens_cpi_set(CPI_1600);
+                NRF_LOG_DEBUG("CPI = CPI_2800");
+                sens_cpi_set(CPI_2800);
             }
             // sens_in_loop();
         }

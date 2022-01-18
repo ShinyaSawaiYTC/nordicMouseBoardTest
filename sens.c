@@ -260,8 +260,9 @@ void sens_init(){
     sens_read(0x04);
     sens_read(0x05);
     sens_read(0x06);
-    sens_cpi_set(CPI_1600);
-    sens_write(0x5A,0x90);//Ripple_control-enable
+    // sens_write(0x5A,0x90);//Ripple_control-enable
+    // sens_write(0x5A,0x90);//Ripple_control-enable
+    sens_write(0x5A,0x00);//Ripple_control-disable
 }
 void sens_cpi_set(cpi_table_t cpi){
     sens_write(0x4E,cpi);
