@@ -100,7 +100,7 @@ static void usbd_user_ev_handler(app_usbd_event_type_t event)
 void usb_init(){
     strcpy(g_my_usbd_manufacturer,APP_USBD_STRING_DESC("elecom test"));
     strcpy(g_my_usbd_product,APP_USBD_STRING_DESC("nRF52 ARMA PROT"));
-    strcpy(g_my_usbd_serial,APP_USBD_STRING_DESC("serial number test"));
+    // strcpy(g_my_usbd_serial,APP_USBD_STRING_DESC("serial number test"));
     strcpy(g_my_usbd_configration,APP_USBD_STRING_DESC("configuration string test"));
 
     APP_ERROR_CHECK(nrf_drv_clock_init());
