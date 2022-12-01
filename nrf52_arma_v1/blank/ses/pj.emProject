@@ -196,6 +196,10 @@
       <file file_name="../../../gen_timer.h" />
       <file file_name="../../../usb.c" />
       <file file_name="../../../usb.h" />
+      <file file_name="../../../radio_ccm.c" />
+      <file file_name="../../../radio_ccm.h" />
+      <file file_name="../../../radio.c" />
+      <file file_name="../../../radio.h" />
     </folder>
     <folder Name="Board Support">
       <file file_name="C:/works/farmware/nrf52/nRF5_SDK_17.1.0_ddde560/components/libraries/bsp/bsp.c" />
